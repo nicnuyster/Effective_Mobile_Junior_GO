@@ -1,0 +1,1 @@
+Папка для всех executables (+ main)

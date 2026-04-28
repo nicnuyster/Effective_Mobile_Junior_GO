@@ -1,0 +1,1 @@
+User -> handler (GET /Product) -> service (GetProduct) -> repo (SELECT ** ) -> throw error 
