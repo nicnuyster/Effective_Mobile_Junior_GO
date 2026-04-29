@@ -29,8 +29,9 @@ func (app *application) mount() http.Handler {
 		w.Write([]byte("all good"))
 	})
 
-	// UsecaseHandler := usecase.NewHandler(nil)
-	// r.Get("/products", UsecaseHandler.ListAll)
+	usecaseService := usecase.NewService()
+	usecasehandler := usecase.NewHandler(usecaseService)
+	r.Get("/listall", usecasehandler.ListAll)
 
 	return r
 }
@@ -59,10 +60,10 @@ type application struct {
 // cfg
 type config struct {
 	addr string
-	//db
+	db   dbConfig
 }
 
-// database config
-// type dbConfig struct {
-// 	dsn string
-// }
+// db config
+type dbConfig struct {
+	dsn string
+}
