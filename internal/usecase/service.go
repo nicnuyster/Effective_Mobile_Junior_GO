@@ -1,19 +1,27 @@
 package usecase
 
-import "context"
+import (
+	"context"
+
+	repo "github.com/nicnuyster/Effective_Mobile_Junior_GO/internal/adapters/postgresql/sqlc"
+)
 
 type Service interface {
-	ListAll(ctx context.Context) error
+	ListAll(ctx context.Context) ([]repo.Subscribtions, error)
 }
 
 type svc struct {
-	//repo nil,
+	repo repo.Querier
 }
 
-func NewService() Service {
-	return nil //&svc{}
+func NewService(repo repo.Querier) Service {
+	return &svc{repo: repo}
 }
 
-func (s *svc) ListProducts(ctx context.Context) error {
-	return nil
+func (s *svc) ListAll(ctx context.Context) ([]repo.Subscribtions, error) {
+	return s.repo.ListAll(ctx)
+}
+
+func (s *svc) ListOne(ctx context.Context) ([]repo.Subscribtions, error) {
+	return s.repo.ListAll(ctx)
 }

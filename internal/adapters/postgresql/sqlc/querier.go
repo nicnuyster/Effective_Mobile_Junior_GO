@@ -9,8 +9,8 @@ import (
 )
 
 type Querier interface {
-	FindProductByID(ctx context.Context, id int64) (Subscribtion, error)
-	ListAll(ctx context.Context) ([]Subscribtion, error)
+	FindProductByID(ctx context.Context, id int64) (Subscribtions, error)
+	ListAll(ctx context.Context) ([]Subscribtions, error)
 }
 
 var _ Querier = (*Queries)(nil)

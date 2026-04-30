@@ -7,6 +7,8 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/jackc/pgx/v5"
+	repo "github.com/nicnuyster/Effective_Mobile_Junior_GO/internal/adapters/postgresql/sqlc"
 	"github.com/nicnuyster/Effective_Mobile_Junior_GO/internal/usecase"
 )
 
@@ -29,7 +31,7 @@ func (app *application) mount() http.Handler {
 		w.Write([]byte("all good"))
 	})
 
-	usecaseService := usecase.NewService()
+	usecaseService := usecase.NewService(repo.New(app.db))
 	usecasehandler := usecase.NewHandler(usecaseService)
 	r.Get("/listall", usecasehandler.ListAll)
 
@@ -54,7 +56,7 @@ func (app *application) run(h http.Handler) error {
 type application struct {
 	config config
 	// logger
-	// db driver
+	db *pgx.Conn
 }
 
 // cfg

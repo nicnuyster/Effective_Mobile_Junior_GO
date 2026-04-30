@@ -16,7 +16,7 @@ func main() {
 	cfg := config{
 		addr: env.GetString("ADDR", ":8080"),
 		db: dbConfig{
-			dsn: env.GetString("DBSTRING", "host=localhost, user=postgres, password=postgres, dbname=efm, sslmode=disable"),
+			dsn: env.GetString("DBSTRING", "host=127.0.0.1 user=postgres password=postgres dbname=efm sslmode=disable"),
 		},
 	}
 
@@ -36,6 +36,7 @@ func main() {
 	//
 	api := application{
 		config: cfg,
+		db:     conn,
 	}
 
 	if err := api.run(api.mount()); err != nil {

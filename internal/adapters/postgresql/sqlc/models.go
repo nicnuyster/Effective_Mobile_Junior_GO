@@ -8,7 +8,7 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
-type Subscribtion struct {
+type Subscribtions struct {
 	ID           int64              `json:"id"`
 	ServiceName  string             `json:"service_name"`
 	PriceInRuble int32              `json:"price_in_ruble"`

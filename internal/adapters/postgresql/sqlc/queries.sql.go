@@ -13,9 +13,9 @@ const findProductByID = `-- name: FindProductByID :one
 SELECT id, service_name, price_in_ruble, id_user, start_date, end_date FROM subscribtions WHERE id = $1
 `
 
-func (q *Queries) FindProductByID(ctx context.Context, id int64) (Subscribtion, error) {
+func (q *Queries) FindProductByID(ctx context.Context, id int64) (Subscribtions, error) {
 	row := q.db.QueryRow(ctx, findProductByID, id)
-	var i Subscribtion
+	var i Subscribtions
 	err := row.Scan(
 		&i.ID,
 		&i.ServiceName,
@@ -31,15 +31,15 @@ const listAll = `-- name: ListAll :many
 SELECT id, service_name, price_in_ruble, id_user, start_date, end_date FROM subscribtions
 `
 
-func (q *Queries) ListAll(ctx context.Context) ([]Subscribtion, error) {
+func (q *Queries) ListAll(ctx context.Context) ([]Subscribtions, error) {
 	rows, err := q.db.Query(ctx, listAll)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []Subscribtion
+	var items []Subscribtions
 	for rows.Next() {
-		var i Subscribtion
+		var i Subscribtions
 		if err := rows.Scan(
 			&i.ID,
 			&i.ServiceName,

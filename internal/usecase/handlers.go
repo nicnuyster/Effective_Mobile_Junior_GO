@@ -1,10 +1,9 @@
 package usecase
 
 import (
+	"github.com/nicnuyster/Effective_Mobile_Junior_GO/internal/json"
 	"log"
 	"net/http"
-
-	"github.com/nicnuyster/Effective_Mobile_Junior_GO/internal/json"
 )
 
 type handler struct {
@@ -17,8 +16,9 @@ func NewHandler(service Service) *handler {
 	}
 }
 
+// crudL
 func (h *handler) ListAll(w http.ResponseWriter, r *http.Request) {
-	err := h.service.ListAll(r.Context())
+	subs, err := h.service.ListAll(r.Context())
 
 	if err != nil {
 		log.Println(err)
@@ -26,10 +26,18 @@ func (h *handler) ListAll(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	subscribtions := struct {
-		sub_name string
-	}{}
+	json.Write(w, http.StatusOK, subs)
+}
 
-	json.write(w, http.StatusOK, subscribtions)
+// cRudl
+func (h *handler) ListOne(w http.ResponseWriter, r *http.Request) {
+	subs, err := h.service.ListAll(r.Context())
 
+	if err != nil {
+		log.Println(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	json.Write(w, http.StatusOK, subs)
 }
